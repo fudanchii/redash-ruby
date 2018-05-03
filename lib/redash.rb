@@ -21,4 +21,9 @@ module Redash
   end
 
   extend ClassMethods
+
+  class ClientError < IOError
+  end
+
+  autoload :Query, 'redash/query'
 end

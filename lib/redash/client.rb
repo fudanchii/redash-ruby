@@ -9,7 +9,9 @@ module Redash
     end
 
     def get(uri, params = {})
-      connection.get(uri, params)
+      connection.get(uri, params) do |req|
+        yield(req) if block_given?
+      end
     end
 
     def connection
