@@ -1,3 +1,5 @@
+require "tempfile"
+
 module Redash
   class Query
     class << self
@@ -24,7 +26,8 @@ module Redash
     end
 
     def to_file(filename)
-      tempfile = Tempfile.create {|f| f.write(fetch.body) }
+      tempfile = Tempfile.open
+      tempfile.write(fetch.body)
       tempfile.fsync
       File.rename(tempfile.path, filename)
     end
