@@ -18,11 +18,11 @@ Gem::Specification.new do |spec|
   end
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "faraday", "~> 0.9.2"
-  spec.add_dependency "multi_json", "~> 1.13.1"
+  spec.add_dependency "faraday", ">= 0.9.2"
+  spec.add_dependency "multi_json", ">= 1.13.1"
 
-  spec.add_development_dependency "bundler", "~> 1.14"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "bundler", "> 1.14"
+  spec.add_development_dependency "rake", "> 10.0"
   spec.add_development_dependency "vcr"
   spec.add_development_dependency "webmock"
   spec.add_development_dependency "minitest", "~> 5.0"
