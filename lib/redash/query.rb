@@ -29,11 +29,16 @@ module Redash
       tempfile = Tempfile.open
       tempfile.write(fetch.body)
       tempfile.fsync
-      File.rename(tempfile.path, filename)
+      begin
+        File.rename(tempfile.path, filename)
+      rescue Errno::EXDEV
+        require "fileutils"
+        FileUtils.move(tempfile.path, filename)
+      end
     end
 
     def to_array
-      fn = "#{@format.to_s}_to_array"
+      fn = "#{@format}_to_array"
       send(fn)
     end
 
@@ -50,7 +55,7 @@ module Redash
     def fetch
       params = { key: @key } if @key
       response = Redash.client
-        .get("/api/queries/#{@query_id}/results.#{@format.to_s}", params) do |req|
+        .get("/api/queries/#{@query_id}/results.#{@format}", params) do |req|
         req.options.timeout = @http_timeout
       end
       raise ClientError.new(response) unless ok?(response)
